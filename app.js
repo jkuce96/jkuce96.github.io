@@ -12,6 +12,10 @@ let score = 0;
 let attempts = 0;
 //přesnost
 let ranks = ["Kopeček", "Dement", "Slepec", "Střelec", "Sniper", "Blend"];
+//přestnost hodnota
+let přesnostHodnota = 0;
+//počet střel
+let shots = 0;
 
 //vytvořit nový target
 function createNewTarget() {
@@ -62,7 +66,12 @@ function createNewTarget() {
 //     }, 110);
 
 // }
-
+//funkce počítání počtu střel
+function countShots() {
+    shots++;
+    document.getElementById("střely").innerText = shots;
+    console.log(shots);
+}
 
 //remove target
 function removeTarget() {
@@ -83,19 +92,20 @@ function addAccuracy() {
 
 //funkce pro HODNOST
 function addRank() {
+    //přesnostHodnota je pro accuracy
     const rank = document.getElementById("rank");
-    if (score < 10) {
+    if (shots >= 10 && score <= 10) {
         rank.innerText = ranks[0];
-    } else if (score < 20) {
-        rank.innerText = ranks[1];
-    } else if (score < 30) {
-        rank.innerText = ranks[2];
-    } else if (score < 40) {
-        rank.innerText = ranks[3];
-    } else if (score < 50) {
-        rank.innerText = ranks[4];
-    } else {
-        rank.innerText = ranks[5];
+    // } else if (shots > 10 && přesnostHodnota > 50 && přesnostHodnota < 60) {
+    //     rank.innerText = ranks[1];
+    // } else if (score < 30) {
+    //     rank.innerText = ranks[2];
+    // } else if (score < 40) {
+    //     rank.innerText = ranks[3];
+    // } else if (score < 50) {
+    //     rank.innerText = ranks[4];
+    // } else {
+    //     rank.innerText = ranks[5];
     }
 }
 
@@ -123,7 +133,13 @@ function shoot(e) {
     console.log(`Pokusy: ${attempts}`);
     console.log(`score: ${score}`);
     console.log(accuracy.innerText);
+    let accuracyText = accuracy.innerText;
+    přesnostHodnota = parseInt(accuracyText.replace("%", ""));
+    console.log(přesnostHodnota);
+    
     addRank();
+    countShots();
+    console.log(shots);
 }
 
 gamebox.addEventListener("click", shoot);
