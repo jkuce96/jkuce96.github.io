@@ -16,6 +16,12 @@ let ranks = ["Kopeček", "Dement", "Slepec", "Střelec", "Sniper", "Blend"];
 let přesnostHodnota = 0;
 //počet střel
 let shots = 0;
+//výchozí stav hry
+let shootingEnabled = true;
+//poslední target
+let latestTarget = null;
+
+
 
 //vytvořit nový target
 function createNewTarget() {
@@ -28,6 +34,8 @@ function createNewTarget() {
     newTarget.style.top = `${randomY}px`;
     newTarget.classList.add("target");
     gamebox.appendChild(newTarget);
+
+    latestTarget = newTarget;
 }
 
 //hit text show
@@ -109,23 +117,32 @@ function addRank() {
     }
 }
 
+//poslední target pro zvětšení moona
+
+
 //SHOOT funkce
 function shoot(e) {
+    if (!shootingEnabled) {
+        return;
+    }
+
     if (e.target.classList == "target") {
         removeTarget();
         createNewTarget();
         // showHitText(e);
         score++;
         addScore();
+        playSound();
         
     } else {
     // showMissText(e);
     setTimeout(() => {
-        gamebox.style.backgroundColor = "lightgrey";
-    }, 50);
+        gamebox.style.backgroundColor = "red";
+    }, 1);
     setTimeout(() => {
         gamebox.style.backgroundColor = "white";
-    }, 150);
+    }, 50);
+    playShiet();
     }
     attempts++;
     addAccuracy();
@@ -136,10 +153,40 @@ function shoot(e) {
     let accuracyText = accuracy.innerText;
     přesnostHodnota = parseInt(accuracyText.replace("%", ""));
     console.log(přesnostHodnota);
-    
     addRank();
     countShots();
     console.log(shots);
+
+    setTimeout(() => {
+        shootingEnabled = false;
+        document.getElementById("gamebox").style.cursor = "not-allowed";
+        document.getElementById("gamebox").style.pointerEvents = "none";
+        // latestTarget.classList.add("bigpes");¨
+        gamebox.classList.add("pesbackground");
+        gamebox.classList.add("fireanim");
+        gamebox.classList.add("smoothtrans");
+        gamebox.classList.add("smaller");
+        // gamebox.classList.add("moveleft");
+
+        latestTarget.style.display = "none";
+        // playSound();
+
+    }, 15000);
+
+    document.getElementById("bar").classList.add("animate");
+    
+}
+
+//audio sound
+function playSound() {
+    let audio = new Audio("bark.mp3");
+    audio.loop = false;
+    audio.play();
+}
+//shiet sound
+function playShiet() {
+    let audio = new Audio("shiet.mp3");
+    audio.play();
 }
 
 gamebox.addEventListener("click", shoot);

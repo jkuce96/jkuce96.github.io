@@ -54,17 +54,61 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    transition: linear 1s ease;
+
+   
     /* transform: 5s ease-in-out; */
 }
 .target{
-    width: 100px;
-    height: 100px;
-    background-color: magenta;
+    width: 110px;
+    height: 110px;
     position: absolute;
-    opacity: 50%;
+    
     border-radius: 50%;
+    background-image: url('https://scontent.fprg4-1.fna.fbcdn.net/v/t1.15752-9/426270025_1128636018151421_2045870484667008174_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=gCQ39w4mus8AX-0VMJX&_nc_ht=scontent.fprg4-1.fna&oh=03_AdQ2nMoUyQGL1BRedmBI5e9T5gJQxWsSr6DJeURTw_LMjQ&oe=65FF875C');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: crosshair;
+    transition: linear 1s ease;
+}
+.bigpes{
+    width: 100%;
+    height: 100%;
+}
+.pesbackground{
+    background-image: url('https://scontent.fprg4-1.fna.fbcdn.net/v/t1.15752-9/426270025_1128636018151421_2045870484667008174_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=gCQ39w4mus8AX-0VMJX&_nc_ht=scontent.fprg4-1.fna&oh=03_AdQ2nMoUyQGL1BRedmBI5e9T5gJQxWsSr6DJeURTw_LMjQ&oe=65FF875C');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: linear 1s ease;
+}
+@keyframes fire {
+    0% { box-shadow: 0 0 20px 20px rgba(255, 165, 0, 0.5); }
+    50% { box-shadow: 0 0 60px 40px rgba(255, 165, 0, 0.8); }
+    100% { box-shadow: 0 0 20px 10px rgba(255, 165, 0, 0.5); }
+}
+.fireanim{
+    transition: linear 0.5s ease;
+    animation: fire 1s infinite alternate; 
+}
+.smaller {
+    transform: scale(0.5);
+}
+.smoothtrans{
+    transition: transform 0.5s ease
+}
+.moveleft{
+    transform: translateX(-50%);
 
 }
+
+.target:active {
+    box-shadow: 0 0 5px 3px magenta;
+}
+/* .target:hover{
+    box-shadow: 0 0 10px 5px magenta;
+} */
 .shooterBox .hit{
     /* display: none; */
     font-size: 40px;
@@ -86,9 +130,12 @@
     border-radius: 50px;
     height: 10px;
     background-color: red;
-    animation: decrease 15s linear forwards;
+    animation: none
     direction: rtl;
-    
+}
+.animate {
+    animation: decrease 15s linear forwards;
+
 }
 @keyframes decrease{
     0%{
