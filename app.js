@@ -11,7 +11,7 @@ let score = 0;
 //pokusy
 let attempts = 0;
 //přesnost
-let ranks = ["Kopeček", "Dement", "Slepec", "Střelec", "Sniper", "Blend"];
+let ranks = ["Kopeček", "Slepec", "Střelec", "Sniper", "Blend"];
 //přestnost hodnota
 let přesnostHodnota = 0;
 //počet střel
@@ -20,8 +20,11 @@ let shots = 0;
 let shootingEnabled = true;
 //poslední target
 let latestTarget = null;
+//gamestart
+let gamestart = false;
 
-
+let previousWidth = 110;
+let previousHeight = 110;
 
 //vytvořit nový target
 function createNewTarget() {
@@ -32,6 +35,10 @@ function createNewTarget() {
     let newTarget = document.createElement("div");
     newTarget.style.left = `${randomX}px`;
     newTarget.style.top = `${randomY}px`;
+    previousWidth -= 4;
+    previousHeight -= 4;
+    newTarget.style.width = `${previousWidth}px`;
+    newTarget.style.height = `${previousHeight}px`;
     newTarget.classList.add("target");
     gamebox.appendChild(newTarget);
 
@@ -102,19 +109,20 @@ function addAccuracy() {
 function addRank() {
     //přesnostHodnota je pro accuracy
     const rank = document.getElementById("rank");
-    if (shots >= 10 && score <= 10) {
+    if (score < 5) {
         rank.innerText = ranks[0];
-    // } else if (shots > 10 && přesnostHodnota > 50 && přesnostHodnota < 60) {
-    //     rank.innerText = ranks[1];
-    // } else if (score < 30) {
-    //     rank.innerText = ranks[2];
-    // } else if (score < 40) {
-    //     rank.innerText = ranks[3];
-    // } else if (score < 50) {
-    //     rank.innerText = ranks[4];
+    } else if (score >= 5 && score < 10) {
+        rank.innerText = ranks[1];
+    } else if (score >= 10 && score < 15) {
+        rank.innerText = ranks[2];
+    } else if (score > 25) {
+        rank.innerText = ranks[4];
+    } else if (score > 20 && score < 25) {
+        rank.innerText = ranks[3];
+    }
     // } else {
     //     rank.innerText = ranks[5];
-    }
+    // }
 }
 
 //poslední target pro zvětšení moona
@@ -129,7 +137,6 @@ function shoot(e) {
     if (e.target.classList == "target") {
         removeTarget();
         createNewTarget();
-        // showHitText(e);
         score++;
         addScore();
         playSound();
@@ -170,10 +177,11 @@ function shoot(e) {
 
         latestTarget.style.display = "none";
         // playSound();
+        gamestart = false;
 
     }, 15000);
 
-    document.getElementById("bar").classList.add("animate");
+    // document.getElementById("bar").classList.add("animate");
     
 }
 
@@ -188,7 +196,24 @@ function playShiet() {
     let audio = new Audio("shiet.mp3");
     audio.play();
 }
+//gameSTART
 
-gamebox.addEventListener("click", shoot);
+
+const startButton = document.getElementById("startButton");
+startButton.addEventListener("click", () => {
+    gamestart = true;
+    if(gamestart) {
+        document.getElementById("bar").classList.add("animate");
+
+        gamebox.addEventListener("click", shoot);
+    }
+})
+
+//resetButton
+const resetButton = document.getElementById("resetButton");
+resetButton.addEventListener("click", () => {
+    location.reload();
+})
 
 
+// gamebox.addEventListener("click", shoot);

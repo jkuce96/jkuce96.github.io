@@ -63,6 +63,7 @@
     width: 110px;
     height: 110px;
     position: absolute;
+    /* display: none; */
     
     border-radius: 50%;
     background-image: url('https://scontent.fprg4-1.fna.fbcdn.net/v/t1.15752-9/426270025_1128636018151421_2045870484667008174_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=gCQ39w4mus8AX-0VMJX&_nc_ht=scontent.fprg4-1.fna&oh=03_AdQ2nMoUyQGL1BRedmBI5e9T5gJQxWsSr6DJeURTw_LMjQ&oe=65FF875C');
@@ -131,7 +132,7 @@
     height: 10px;
     background-color: red;
     animation: none
-    direction: rtl;
+    /* direction: rtl; */
 }
 .animate {
     animation: decrease 15s linear forwards;
@@ -158,4 +159,23 @@
 }
 .combinedCard .card{
     width: 600px;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px; 
+    gap: 10px;
+}
+#startButton, #resetButton{
+    transition: 0.5s ease;
+
+}
+#startButton:active, #resetButton:active{
+    background-color: #2980b9; 
+    color: white;
+    transform: scale(0.9);
+
 }
